@@ -1,14 +1,22 @@
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-import domain.Pessoa;
+import configuracaoInicial.Configuracoes;
+import services.AlunoService;
+import services.PessoaService;
 
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
 		
-		Pessoa p = new Pessoa("Benito", "982310565", "02/03/1990");
+		Configuracoes config = new Configuracoes();
 		
-		System.out.println(p);
+		PessoaService pessoas = config.getPessoas();
+		AlunoService alunos = config.getAlunos();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		
 	}
 
 }

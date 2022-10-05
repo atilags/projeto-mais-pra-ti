@@ -1,12 +1,14 @@
 package domain;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import util.Auxiliares;
+
 public class Pessoa {
 	
+	protected long id;
 	protected String nome;
 	protected String telefone;
 	protected Date nascimento;
@@ -15,6 +17,8 @@ public class Pessoa {
 	
 	SimpleDateFormat sdfBasico = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat sdfAvancado = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	
+	public static int geraId = 0;
 	
 	public Pessoa() {
 	}
@@ -25,14 +29,11 @@ public class Pessoa {
 		this.nascimento = nascimento;
 		
 		this.dataCadastro = new Date();
+		this.id = ++geraId; 
 	}
-	
-	public Pessoa(String nome, String telefone, String nascimento) throws ParseException {
-		this.nome = nome;
-		this.telefone = telefone;
-		this.nascimento = sdfBasico.parse(nascimento);
-		
-		this.dataCadastro = new Date();
+
+	public long getId() {
+		return id;
 	}
 
 	public String getNome() {
@@ -102,15 +103,27 @@ public class Pessoa {
 	
 	public String infoSimplificada() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Nome: " + nome);
-		sb.append("\nTelefone: " + telefone);
-		sb.append("\nData de nascimento: " + getNascimentoSimplificado());
+		sb.append("Nome: " + this.getNome());
+		sb.append("\nTelefone: " + this.getTelefone());
+		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
+		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
 		
 		return sb.toString();
 	}
 	
 	@Override
 	public String toString() {
-
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID de usuario: " + this.getId());
+		sb.append("\nNome: " + this.getNome());
+		sb.append("\nTelefone: " + this.getTelefone());
+		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
+		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
+		sb.append("\nData de cadastro: " + this.getDataCadastro());
+		if(this.getUltimaAlteracaoPerfil() != null) {
+			sb.append("\nUltima data de Alteração: " + this.getUltimaAlteracaoPerfil());			
+		}
+		
+		return sb.toString();
 	}
 }
