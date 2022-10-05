@@ -10,25 +10,9 @@ import services.PessoaService;
 
 public class Configuracoes {
 
-	private PessoaService pessoas;
-	private AlunoService alunos;
+	public static SimpleDateFormat sdfIdade = new SimpleDateFormat("dd/MM/yyyy");
 
-	SimpleDateFormat sdfIdade = new SimpleDateFormat("dd/MM/yyyy");
-
-	public Configuracoes() throws ParseException {
-		geraPessoas();
-		geraAlunos();
-	}
-
-	public PessoaService getPessoas() {
-		return pessoas;
-	}
-
-	public AlunoService getAlunos() {
-		return alunos;
-	}
-
-	public void geraPessoas() throws ParseException {
+	public static PessoaService geraPessoas() throws ParseException {
 		PessoaService service = new PessoaService();
 
 		Pessoa pessoa1 = new Pessoa("Frederico Pereira", "862411285", sdfIdade.parse("01/12/1992"));
@@ -43,10 +27,11 @@ public class Configuracoes {
 		service.insert(pessoa2);
 		service.insert(pessoa3);
 		service.insert(pessoa4);
-		this.pessoas = service;
+
+		return service;
 	}
 
-	public void geraAlunos() throws ParseException {
+	public static AlunoService geraAlunos() throws ParseException {
 		AlunoService service = new AlunoService();
 
 		Aluno aluno1 = new Aluno("Yago Cerqueira", "654659852", sdfIdade.parse("19/10/2004"), 8.3);
@@ -61,6 +46,7 @@ public class Configuracoes {
 		service.insert(aluno2);
 		service.insert(aluno3);
 		service.insert(aluno4);
-		this.alunos = service;
+		
+		return service;
 	}
 }

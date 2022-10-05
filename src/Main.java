@@ -8,15 +8,13 @@ import services.PessoaService;
 public class Main {
 
 	public static void main(String[] args) throws ParseException {
-		
-		Configuracoes config = new Configuracoes();
-		
-		PessoaService pessoas = config.getPessoas();
-		AlunoService alunos = config.getAlunos();
+
+		PessoaService pessoas = Configuracoes.geraPessoas();
+		AlunoService alunos = Configuracoes.geraAlunos();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
-		
+		pessoas.findAll().forEach(n -> System.out.println(n + "\n"));
 	}
 
 }
