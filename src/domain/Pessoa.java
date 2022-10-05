@@ -1,6 +1,5 @@
 package domain;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,9 +13,6 @@ public class Pessoa {
 	protected Date nascimento;
 	protected Date dataCadastro;
 	protected Date ultimaAlteracaoPerfil;
-	
-	SimpleDateFormat sdfBasico = new SimpleDateFormat("dd/MM/yyyy");
-	SimpleDateFormat sdfAvancado = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	public static int geraId = 0;
 	
@@ -61,7 +57,7 @@ public class Pessoa {
 	}
 	
 	public String getNascimentoSimplificado() {
-		return sdfBasico.format(nascimento);
+		return Auxiliares.sdfDiaMesAno.format(nascimento);
 	}
 
 	public Date getDataCadastro() {
@@ -69,7 +65,7 @@ public class Pessoa {
 	}
 	
 	public String getDataCadastroSimplificado() {
-		return sdfAvancado.format(dataCadastro);
+		return Auxiliares.sdfDataEHora.format(dataCadastro);
 	}
 
 	public Date getUltimaAlteracaoPerfil() {
@@ -81,7 +77,7 @@ public class Pessoa {
 	}
 	
 	public String getUltimaAlteracaoPerfilSimplificado() {
-		return sdfAvancado.format(ultimaAlteracaoPerfil);
+		return Auxiliares.sdfDataEHora.format(ultimaAlteracaoPerfil);
 	}
 
 	@Override

@@ -12,8 +12,6 @@ public class Main {
 		PessoaService pessoas = Configuracoes.geraPessoas();
 		AlunoService alunos = Configuracoes.geraAlunos();
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
 		pessoas.findAll().forEach(n -> System.out.println(n + "\n"));
 	}
 

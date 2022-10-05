@@ -1,9 +1,13 @@
 package util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Auxiliares {
+	
+	public static SimpleDateFormat sdfDiaMesAno = new SimpleDateFormat("dd/MM/yyyy");
+	public static SimpleDateFormat sdfDataEHora = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	public static int getIdade(Date data) {
 		Calendar cData = Calendar.getInstance();
