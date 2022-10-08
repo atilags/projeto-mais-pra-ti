@@ -26,28 +26,34 @@ public class AlunoService {
 	public List<Aluno> findAll() {
 		return this.repo.findAll();
 	}
+	
+	//Foi feito o metodo findById para caso seja necessário, mas como não foi solicitado no projeto, ficará inativado.
 
-	public Aluno findById(long id) {
-		if (this.repo.findById(id) != null) {
-			return repo.findById(id);
+//	public Aluno findById(long id) {
+//		if (this.repo.findById(id) != null) {
+//			return repo.findById(id);
+//		} else {
+//			throw new ObjectNotFoundException("Perfil de aluno não localizado.");
+//		}
+//	}
+
+	public void update(Aluno aluno) {
+		this.repo.update(aluno.getId(), aluno);
+	}
+
+	public void delete(Aluno aluno) {
+		if(findAll().contains(aluno)) {
+			repo.delete(aluno.getId());
 		} else {
 			throw new ObjectNotFoundException("Perfil de aluno não localizado.");
 		}
 	}
 
-	public void update(Aluno aluno) {
-		this.repo.update(aluno.getId(), aluno);
-
-	}
-
-	public void delete(long id) {
-		Aluno aluno = findById(id);
-		repo.delete(aluno.getId());
-	}
-
-	public Aluno findByName(String nome) {
-		List<Aluno> todosAlunos = findAll();
-		return todosAlunos.stream().filter(n -> n.getNome().equalsIgnoreCase(nome)).findFirst()
-				.orElseThrow(() -> new ObjectNotFoundException("Aluno não encontrado."));
-	}
+	//Feito um método para localizar um Aluno pelo nome, porem como não foi solicitado no projeto, ficará inativado.
+	
+//	public Aluno findByName(String nome) {
+//		List<Aluno> todosAlunos = findAll();
+//		return todosAlunos.stream().filter(n -> n.getNome().equalsIgnoreCase(nome)).findFirst()
+//				.orElseThrow(() -> new ObjectNotFoundException("Aluno não encontrado."));
+//	}
 }

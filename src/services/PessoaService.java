@@ -27,26 +27,33 @@ public class PessoaService {
 		return this.repo.findAll();
 	}
 
-	public Pessoa findById(long id) {
-		if (this.repo.findById(id) != null) {
-			return repo.findById(id);
-		} else {
-			throw new ObjectNotFoundException("Perfil de pessoa não localizado.");
-		}
-	}
+	//Foi feito o metodo findById para caso seja necessário, mas como não foi solicitado no projeto, ficará inativado.
+	
+//	public Pessoa findById(long id) {
+//		if (this.repo.findById(id) != null) {
+//			return repo.findById(id);
+//		} else {
+//			throw new ObjectNotFoundException("Perfil de pessoa não localizado.");
+//		}
+//	}
 
 	public void update(Pessoa pessoa) {
 		this.repo.update(pessoa.getId(), pessoa);
 	}
 
-	public void delete(long id) {
-		Pessoa pessoa = findById(id);
-		repo.delete(pessoa.getId());
+	public void delete(Pessoa pessoa) {
+		if(findAll().contains(pessoa)) {
+			repo.delete(pessoa.getId());
+		} else {
+			throw new ObjectNotFoundException("Perfil de pessoa não localizado.");
+		}
 	}
-
-	public Pessoa findByName(String nome) {
-		List<Pessoa> todosAlunos = findAll();
-		return todosAlunos.stream().filter(n -> n.getNome().equalsIgnoreCase(nome)).findFirst()
-				.orElseThrow(() -> new ObjectNotFoundException("Pessoa não encontrado."));
-	}
+	
+	//Feito um método para localizar uma Pessoa pelo nome, porem como não foi solicitado no projeto, ficará inativado.
+	
+//	public Pessoa findByName(String nome) {
+//		List<Pessoa> todosAlunos = findAll();
+//		return todosAlunos.stream().filter(n -> n.getNome().equalsIgnoreCase(nome)).findFirst()
+//				.orElseThrow(() -> new ObjectNotFoundException("Pessoa não encontrado."));
+//	}
 }
