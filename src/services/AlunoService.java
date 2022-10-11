@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import domain.Aluno;
+import domain.Pessoa;
 import repository.Repository;
 import services.excepctions.ObjectAlreadyExistsException;
 import services.excepctions.ObjectNotFoundException;
@@ -14,13 +15,26 @@ public class AlunoService {
 	public AlunoService() {
 	}
 
-	public void insert(Aluno aluno) {
-		if (this.repo.findAll().contains(aluno)) {
+	public void insert(Aluno aluno, PessoaService pessoas) {
+		boolean existePessoa = alreadyExistsPessoa(aluno, pessoas);
+				
+		if (this.repo.findAll().contains(aluno) || existePessoa) {
 			Aluno.geraId--;
-			throw new ObjectAlreadyExistsException("Perfil de aluno já existente.");
+			throw new ObjectAlreadyExistsException("\nErro, perfil já existente como um Aluno ou Pessoa.");
 		} else {
 			this.repo.insert(aluno.getId(), aluno);
 		}
+	}
+	
+	//Metodo que recebe um aluno e o service com todos as pessoas, para comparar se o aluno informado já está cadastrado como uma Pessoa
+	public boolean alreadyExistsPessoa(Aluno aluno, PessoaService pessoas) {
+		for(Pessoa p: pessoas.findAll()) {
+			if(p.getTelefone().equals(aluno.getTelefone())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public List<Aluno> findAll() {
@@ -38,22 +52,20 @@ public class AlunoService {
 //	}
 
 	public void update(Aluno aluno) {
-		this.repo.update(aluno.getId(), aluno);
+			this.repo.update(aluno.getId(), aluno);
 	}
 
 	public void delete(Aluno aluno) {
 		if(findAll().contains(aluno)) {
 			repo.delete(aluno.getId());
 		} else {
-			throw new ObjectNotFoundException("Perfil de aluno não localizado.");
+			throw new ObjectNotFoundException("\nErro, perfil de aluno não localizado.");
 		}
 	}
 
-	//Feito um método para localizar um Aluno pelo nome, porem como não foi solicitado no projeto, ficará inativado.
-	
-//	public Aluno findByName(String nome) {
-//		List<Aluno> todosAlunos = findAll();
-//		return todosAlunos.stream().filter(n -> n.getNome().equalsIgnoreCase(nome)).findFirst()
-//				.orElseThrow(() -> new ObjectNotFoundException("Aluno não encontrado."));
-//	}
+	public Aluno findByTelefone(String telefone) {
+		List<Aluno> todosAlunos = findAll();
+		return todosAlunos.stream().filter(n -> n.getTelefone().equals(telefone)).findAny()
+				.orElse(null);
+	}
 }

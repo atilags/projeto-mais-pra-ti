@@ -21,7 +21,7 @@ public class Pessoa {
 	
 	public Pessoa(String nome, String telefone, Date nascimento) {
 		this.nome = nome;
-		this.telefone = telefone;
+		setTelefone(telefone);
 		this.nascimento = nascimento;
 		
 		this.dataCadastro = new Date();
@@ -45,7 +45,12 @@ public class Pessoa {
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		long tel = Long.parseLong(telefone);
+		
+		//Irá testar se o padrão do telefone está correto, com 11 digitos, ddd+celular, caso esteja incorreto o sistema irá dar erro de Out of Bound.
+		this.telefoneFormatado(telefone);
+		
+		this.telefone = String.valueOf(tel);
 	}
 
 	public Date getNascimento() {
@@ -79,10 +84,15 @@ public class Pessoa {
 	public String getUltimaAlteracaoPerfilSimplificado() {
 		return Auxiliares.sdfDataEHora.format(ultimaAlteracaoPerfil);
 	}
+	
+	public String telefoneFormatado(String telefone) {
+		telefone = "(" + telefone.substring(0,2) + ") " + telefone.substring(2, 7) + "-" + telefone.substring(7,11);
+		return telefone;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nome);
+		return Objects.hash(telefone);
 	}
 
 	@Override
@@ -94,30 +104,19 @@ public class Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
-		return Objects.equals(nome, other.nome);
-	}
-	
-	public String infoSimplificada() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Nome: " + this.getNome());
-		sb.append("\nTelefone: " + this.getTelefone());
-		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
-		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
-		sb.append("\nData de cadastro: " + this.getDataCadastroSimplificado());
-		
-		return sb.toString();
+		return Objects.equals(telefone, other.telefone);
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nNome: " + this.getNome());
-		sb.append("\nTelefone: " + this.getTelefone());
+		sb.append("\nTelefone: " + this.telefoneFormatado(this.telefone));
 		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
 		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
-		sb.append("\nData de cadastro: " + this.getDataCadastro());
+		sb.append("\nData de cadastro: " + this.getDataCadastroSimplificado());
 		if(this.getUltimaAlteracaoPerfil() != null) {
-			sb.append("\nUltima data de Alteração: " + this.getUltimaAlteracaoPerfil());			
+			sb.append("\nUltima data de Alteração: " + this.getUltimaAlteracaoPerfilSimplificado());			
 		}
 		
 		return sb.toString();

@@ -22,29 +22,16 @@ public class Aluno extends Pessoa{
 	}
 	
 	@Override
-	public String infoSimplificada() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Nome: " + this.getNome());
-		sb.append("\nTelefone: " + this.getTelefone());
-		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
-		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
-		sb.append("\nData de cadastro: " + this.getDataCadastroSimplificado());
-		sb.append("\nNota final do curso: " + this.getNotaFinalCurso());
-		
-		return sb.toString();
-	}
-	
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nNome: " + this.getNome());
-		sb.append("\nTelefone: " + this.getTelefone());
+		sb.append("\nTelefone: " + this.telefoneFormatado(this.telefone));
 		sb.append("\nIdade: " + Auxiliares.getIdade(this.getNascimento()));
 		sb.append("\nData de nascimento: " + this.getNascimentoSimplificado());
 		sb.append("\nNota final do curso: " + this.getNotaFinalCurso());
-		sb.append("\nData de cadastro: " + this.getDataCadastro());
+		sb.append("\nData de cadastro: " + this.getDataCadastroSimplificado());
 		if(this.getUltimaAlteracaoPerfil() != null) {
-			sb.append("\nUltima data de Alteração: " + this.getUltimaAlteracaoPerfil());			
+			sb.append("\nUltima data de Alteração: " + this.getUltimaAlteracaoPerfilSimplificado());			
 		}
 		
 		return sb.toString();
